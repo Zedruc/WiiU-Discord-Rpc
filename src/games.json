@@ -1,0 +1,34 @@
+{
+    "dkctf": {
+        "icon": "dkctf",
+        "title": "Donkey Kong Country: Tropical Freeze"
+    },
+    "mk8": {
+        "icon": "mk8",
+        "title": "Mario Kart 8"
+    },
+    "nl": {
+        "icon": "nl",
+        "title": "Nintendo Land"
+    },
+    "nsmbu": {
+        "icon": "nsmbu",
+        "title": "New Super Mario Bros. U"
+    },
+    "sm3dw": {
+        "icon": "sm3dw",
+        "title": "Super Mario 3D World"
+    },
+    "smm": {
+        "icon": "smm",
+        "title": "Super Mario Maker"
+    },
+    "ssmb": {
+        "icon": "ssmb",
+        "title": "Super Smash Bros."
+    },
+    "ztwhd": {
+        "icon": "ztwhd",
+        "title": "The Legend Of Zelda: The Windwaker HD"
+    }
+}

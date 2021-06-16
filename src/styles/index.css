@@ -1,0 +1,235 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(26, 24, 24);
+    overflow: hidden;
+    user-select: none;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.title {
+    font-family: 'Gotham';
+    font-weight: 600;
+    font-size: 38px;
+
+    color: #fff;
+
+    margin-top: 15px;
+}
+
+.subtitle {
+    font-family: 'Gotham';
+    font-weight: 600;
+    font-size: 24px;
+
+    color: #fff;
+}
+
+.container--games {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 80vh;
+    margin-top: 20px;
+    background-color: rgb(31, 29, 29);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    background-color: #252727;
+    color: #aba499;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #181a1b;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #454a4d;
+}
+
+.game {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    height: 130px;
+    background-color: rgb(55, 51, 51);
+}
+
+.game:hover {
+    background-color: rgb(44, 42, 42);
+}
+
+.game:active {
+    background-color: rgb(39, 38, 38);
+}
+
+.game-title {
+    margin-left: 205px;
+    font-family: 'Gotham';
+    font-weight: 500;
+    font-size: 24px;
+    color: #fff;
+}
+
+.gameIcon {
+    height: 100%;
+    float: left;
+    margin-right: 25px;
+}
+
+.notification-div {
+    z-index: 100;
+
+    border-radius: 11px;
+
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    margin: auto 8px 13px 8px;
+
+
+    height: auto;
+    max-height: 170px;
+    width: auto;
+    max-width: 400px;
+    background: #211e1e;
+    border: 2px solid rgb(43, 168, 226);
+
+    animation-name: notification;
+    animation-duration: 1s;
+}
+
+@keyframes notification {
+    from {
+        right: -20%;
+    }
+
+    to {
+        right: 0;
+    }
+}
+
+.notification-title {
+    font-size: 32px;
+    font-family: 'Gotham';
+    color: #fff;
+    font-weight: 400;
+
+    margin: 1px 10px 0px 10px;
+}
+
+.notification-message {
+    font-size: 24px;
+    font-family: 'Gotham';
+    color: #fff;
+    font-weight: 300;
+
+    margin: 4px 10px 5px 10px;
+}
+
+.removed {
+    opacity: 0;
+    transition: 2s;
+}
+
+.settings {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+    width: 50px;
+    transition: .1s;
+}
+
+
+.settings:hover {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+    width: 55px;
+}
+
+.settings:active {
+        position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 5px;
+    width: 52.5px;
+}
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 80vh;
+    margin-top: 20px;
+    background-color: rgb(31, 29, 29);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.option {
+    width: 100%;
+    height: 100px;
+    padding: 3px 0 3px 0;
+    border-bottom: 2px solid #454a4d;
+    /* border-top: 2px solid #454a4d; */
+}
+
+.option-name {
+    font-family: 'Gotham';
+    font-size: 24px;
+    font-weight: 500;
+    color: #fff;
+    margin: 5px 0 0 5px;
+}
+
+.option-description {
+    display: block;
+    font-family: 'Gotham';
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    margin: 15px 0 0 45px;
+}
+
+[type="checkbox"] {
+    height: 17px;
+    margin: 13px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 40px;
+    left: 0;
+    width: auto;
+    height: 50px;
+    margin-left: 15px;
+}
+
+.back-arrow {
+    width: 40px;
+    float: left;
+}
+
+.back-text {
+    font-family: 'Gotham';
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 15px;
+}

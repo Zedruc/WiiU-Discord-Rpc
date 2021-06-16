@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="./js/notifications.js"></script>
+    <script defer src="./js/settings.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./assets/fonts/gotham/stylesheet.css">
+    <script defer src="./js/changer.js"></script>
+</head>
+
+<body>
+    <div class="title-bar">
+        <div class="icons"></div>
+    </div>
+    <div class="wrapper" id="mainPage">
+
+        <span class="title">Discord WiiU RPC</span>
+        <span class="subtitle">Click on a game to set it as your Discord status</span>
+        <div class="container--games">
+            <div class="game" id="dkctf" onclick='updateRPC("dkctf")'>
+                <img src="./images/icons/games/dkctf.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>Donkey Kong Country: Tropical Freeze</p>
+                </span>
+            </div>
+
+            <div class="game" id="mk8" onclick='updateRPC("mk8")'>
+                <img src="./images/icons/games/mk8.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>Mario Kart 8</p>
+                </span>
+            </div>
+
+            <div class="game" id="nl" onclick='updateRPC("nl")'>
+                <img src="./images/icons/games/nl.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>Nintendo Land</p>
+                </span>
+            </div>
+
+            <div class="game" id="nsmbu" onclick='updateRPC("nsmbu")'>
+                <img src="./images/icons/games/nsmbu.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>New Super Mario Bros. U</p>
+                </span>
+            </div>
+
+            <div class="game" id="sm3dw" onclick='updateRPC("sm3dw")'>
+                <img src="./images/icons/games/sm3dw.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>Super Mario 3D World</p>
+                </span>
+            </div>
+
+            <div class="game" id="smm" onclick='updateRPC("smm")'>
+                <img src="./images/icons/games/smm.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>Super Mario Maker</p>
+                </span>
+            </div>
+
+            <div class="game" id="ssmb" onclick='updateRPC("ssmb")'>
+                <img src="./images/icons/games/ssmb.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>Super Smash Bros.</p>
+                </span>
+            </div>
+
+            <div class="game" id="ztwhd" onclick='updateRPC("ztwhd")'>
+                <img src="./images/icons/games/ztwhd.jpg" class="gameIcon" draggable="false">
+                <span class="game-title">
+                    <p>Super The Legend Of Zelda: The Windwaker HD</p>
+                </span>
+            </div>
+        </div>
+        <div id="footer">
+            <span>
+                <img src="./images/icons/settings.svg" alt="Settings" class="settings" id="settings" draggable="false">
+            </span>
+        </div>
+    </div>
+
+
+    <!-- <script src="./renderer.js"></script> -->
+    <div class="wrapper" id="settingsPage" style="display: none; position: absolute;">
+        <div class="header" id="back">
+            <img src="./images/icons/back.svg" alt="Back" class="back-arrow">
+            <p class="back-text">Back</p>
+        </div>
+        <span class="title">Settings</span>
+        <span class="subtitle">Settings will work after a restart</span>
+        <div class="settings-container">
+            <div class="option">
+                <span class="option-name"><input type="checkbox"
+                        onclick="toggleOption('reset-timer-when-playing-a-new-game')"
+                        id="reset-timer-when-playing-a-new-game" name="reset-timer-when-playing-a-new-game"><label
+                        for="reset-timer-when-playing-a-new-game">Reset timer
+                        when playing a new game</label></span>
+                <span class="option-description">Reset timer when playing a new game</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
