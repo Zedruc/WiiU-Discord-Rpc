@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('path');
 const RPC = require('discord-rpc');
 const fs = require('fs');
@@ -6,7 +6,14 @@ const rpc = new RPC.Client({
     transport: "ipc"
 });
 
-console.log(process.cwd());
+// Setup file logging
+const log = require('electron-log');
+log.transports.file.level = 'silly';
+log.transports.file.file = path.join(process.cwd(), 'resources', 'app', 'logs', 'log.log');
+
+// Log a message
+log.info('log message');
+log.error('Error message');
 
 var status_details = {
     RPCClientIsReady: false,
@@ -20,11 +27,27 @@ rpc.on('ready', () => {
 
 const CLIENT_ID = "853639117019283476";
 
-const settings = JSON.parse(fs.readFileSync(path.join(__dirname, 'user', 'settings.json')));
+// resources\app\src\user
+console.log('\t*-----*');
+var settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
 
-rpc.login({
-    clientId: CLIENT_ID.toString()
-});
+loginRPC();
+function loginRPC() {
+    /**
+     * Try to login
+     * If the ready event didnt fire and RPCClientIsReady is false
+     * repeat the process in 2 seconds
+     */
+
+    rpc.login({
+        clientId: CLIENT_ID.toString()
+    });
+
+    if (status_details.RPCClientIsReady) return;
+    else setTimeout(() => {
+        loginRPC();
+    }, 2000);
+}
 
 var games = JSON.parse(fs.readFileSync(path.join(__dirname, 'games.json')));
 /* console.log(games); */
@@ -38,8 +61,8 @@ const createWindow = () => {
     mainWindow = new BrowserWindow({
         width: 900,
         height: 600,
-        minWidth: 750,
-        minHeight: 550,
+        minWidth: 770,
+        minHeight: 570,
         frame: false,
         webPreferences: {
             nodeIntegration: true,
@@ -52,8 +75,12 @@ const createWindow = () => {
     // and load the index.html of the app.
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-    // Open the DevTools.
-    /*     mainWindow.webContents.openDevTools(); */
+    // Prevent user from opening dev tools
+    /*     mainWindow.webContents.on('devtools-opened', () => {
+            mainWindow.webContents.closeDevTools();
+        }); */
+
+    globalShortcut.register('CommandOrControl+Shift+I', () => { return })
 };
 
 // This method will be called when Electron has finished
@@ -66,6 +93,7 @@ app.on('ready', createWindow);
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
+        log.info('Quitting App');
         app.quit();
     }
 });
@@ -98,11 +126,21 @@ ipcMain.on('update_game', (sender, gameId) => {
             ]
         });
     } catch (error) {
-        console.log(error);
+        log.error(error);
         mainWindow.webContents.send('error');
         return;
     }
 
+});
+
+ipcMain.on('update_settings', (sender, optionKey) => {
+    /**
+     * At this point the settings file itself is already up to date
+     * Now we just update the variable for the settings checks (beginning on line 91).
+     */
+
+    settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
+    log.info('Settings Updated');
 });
 
 // In this file you can include the rest of your app's specific main process

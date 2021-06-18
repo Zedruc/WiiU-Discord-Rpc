@@ -1,0 +1,61 @@
+.notification-div {
+    z-index: 100;
+
+    border-radius: 11px;
+
+    position: fixed;
+    bottom: 0;
+    right: 0;
+
+    margin: auto 8px 13px 8px;
+
+
+    height: auto;
+    max-height: 220px;
+    width: auto;
+    max-width: 500px;
+    background: #211e1e;
+    border: 2px solid rgb(43, 168, 226);
+
+    animation-name: notification;
+    animation-duration: 1s;
+}
+
+a {
+    text-decoration: underline;
+    color: #fff;
+    cursor: pointer;
+}
+
+@keyframes notification {
+    from {
+        right: -20%;
+    }
+
+    to {
+        right: 0;
+    }
+}
+
+.notification-title {
+    font-size: 32px;
+    font-family: 'Gotham';
+    color: #fff;
+    font-weight: 400;
+
+    margin: 1px 10px 0px 10px;
+}
+
+.notification-message {
+    font-size: 24px;
+    font-family: 'Gotham';
+    color: #fff;
+    font-weight: 300;
+
+    margin: 4px 10px 5px 10px;
+}
+
+.removed {
+    opacity: 0;
+    transition: 2s;
+}

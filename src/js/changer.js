@@ -13,13 +13,13 @@ var updateRPC = (gameId) => {
 }
 
 ipc.on('error', (_empty) => {
-    userNotification('Error!', 'Make sure your Discord app is running before opening this app. If this keeps showing up please create an issue at github.com/zedruc/WiiU-Discord-Rpc', 5);
+    userNotification('Not able to display status!', 'Make sure your Discord app is running before opening this app. If this keeps showing up please create an issue at <a onclick="require(\'electron\').shell.openExternal(\'https://github.com/Zedruc/WiiU-Discord-Rpc\')">github.com/zedruc/WiiU-Discord-Rpc</a>', 10);
 });
 
 ipc.on('rpc_ready', (_empty) => {
-    userNotification('Ready', 'You can now use the app properly!', 5);
+    userNotification('Ready!', 'You can now use the app properly! Note: If you restart Discord, you will also have to restart the app.', 5);
 });
 
 ipc.on('not_ready_yet', (_empty) => {
-    userNotification('Not ready yet!', 'You somehow managed to click so fast that the app couldn\'t even connect...', 5);
+    userNotification('Not able to display status!', 'If this keeps showing up please create an issue at <a onclick="require(\'electron\').shell.openExternal(\'https://github.com/Zedruc/WiiU-Discord-Rpc\')">github.com/zedruc/WiiU-Discord-Rpc</a>', 10);
 });

@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const url = require('url');
 
 const customTitleBar = require('custom-electron-titlebar');
 
@@ -21,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     var checkbox1 = document.getElementById('reset-timer-when-playing-a-new-game');
-    var settings = JSON.parse(fs.readFileSync(path.resolve('./src/user/settings.json')));
+    var settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
 
     checkbox1.checked = settings["reset-timer-when-playing-a-new-game"];
 });

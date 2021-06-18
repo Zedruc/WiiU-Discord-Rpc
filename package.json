@@ -10,8 +10,8 @@
         "make": "electron-forge make",
         "publish": "electron-forge publish",
         "lint": "echo \"No linting configured\"",
-        "build-win": "electron-packager . --platform win32 --icon ./src/assets/icon.ico --out ./dist --overwrite --asar=true",
-        "build-osx": "electron-packager . --platform darwin --icon ./src/assets/icon.icns --out ./dist --overwrite --asar=true"
+        "build-win": "electron-packager . --platform win32 --icon ./src/assets/icon.ico --out ./dist --overwrite --asar=false",
+        "build-osx": "electron-packager . --platform darwin --icon ./src/assets/icon.icns --out ./dist --overwrite --asar=false"
     },
     "keywords": [],
     "author": {
@@ -49,6 +49,7 @@
     "dependencies": {
         "custom-electron-titlebar": "^3.2.7",
         "discord-rpc": "^3.2.0",
+        "electron-log": "^4.3.5",
         "electron-squirrel-startup": "^1.0.0",
         "fs": "0.0.1-security"
     },

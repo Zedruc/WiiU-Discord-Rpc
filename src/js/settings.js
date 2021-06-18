@@ -1,10 +1,9 @@
+const { ipcRenderer } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const settingsFile = path.resolve('./src/user/settings.json');
+const settingsFile = path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json');
 
-var settings;
-
-settings = JSON.stringify(fs.readFileSync(settingsFile));
+var settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
 
 function MissingParameters() {
     this.message = "Please provide both parameters key and value";
@@ -41,6 +40,8 @@ function toggleOption(optionKey) {
         var temp = settingsHandler.load();
         temp[optionKey] = !temp[optionKey];
         settingsHandler.set(optionKey, temp[optionKey]);
+
+        ipcRenderer.send('update_settings', optionKey);
         return;
     } catch (error) {
         throw error;
@@ -50,21 +51,19 @@ function toggleOption(optionKey) {
 const settingsButton = document.getElementById('settings');
 const backButton = document.getElementById('back');
 
-const mainPage = document.getElementById('mainPage');
-const settingsPage = document.getElementById('settingsPage');
+const settingsPage = document.querySelector("#settingsPage");
+const mainPage = document.querySelector("#mainPage");
 
 settingsButton.onmouseup = () => {
-    userNotification("Sorry!", "Settings arent available until the styling issue is fixed.", 3)
-    return;
-    mainPage.style.display = "none";
     mainPage.style.position = "absolute";
-    settingsPage.style.display = "inline";
-    settingsPage.style.position = "static";
+    mainPage.style.display = "none";
+    settingsPage.style.position = null;
+    settingsPage.style.display = null;
 }
 
 backButton.onmouseup = () => {
-    mainPage.style.display = "inline";
-    mainPage.style.position = "static";
-    settingsPage.style.display = "none";
+    mainPage.style.position = null;
+    mainPage.style.display = null;
     settingsPage.style.position = "absolute";
+    settingsPage.style.display = "none";
 }
