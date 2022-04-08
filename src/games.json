@@ -1,4 +1,12 @@
 {
+    "tlp": {
+        "icon": "tlp",
+        "title": "The Legend of Zelda: Twilight Princess HD"
+    },
+    "splat": {
+        "icon": "splat",
+        "title": "Splatoon"
+    },
     "dkctf": {
         "icon": "dkctf",
         "title": "Donkey Kong Country: Tropical Freeze"
@@ -30,5 +38,9 @@
     "ztwhd": {
         "icon": "ztwhd",
         "title": "The Legend Of Zelda: The Windwaker HD"
+    },
+    "botw": {
+        "icon": "botw",
+        "title": "The Legend of Zelda: Breath of the Wild"
     }
 }

@@ -23,3 +23,8 @@ ipc.on('rpc_ready', (_empty) => {
 ipc.on('not_ready_yet', (_empty) => {
     userNotification('Not able to display status!', 'If this keeps showing up please create an issue at <a onclick="require(\'electron\').shell.openExternal(\'https://github.com/Zedruc/WiiU-Discord-Rpc\')">github.com/zedruc/WiiU-Discord-Rpc</a>', 10);
 });
+
+ipc.on('notify', (_, notification) => {
+    console.log(notification);
+    userNotification(notification.title, notification.msg, notification.timeout);
+});

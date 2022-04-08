@@ -12,8 +12,8 @@ log.transports.file.level = 'silly';
 log.transports.file.file = path.join(process.cwd(), 'resources', 'app', 'logs', 'log.log');
 
 // Log a message
-log.info('log message');
-log.error('Error message');
+// log.info('Info log');
+// log.error('Error log');
 
 var status_details = {
     RPCClientIsReady: false,
@@ -29,25 +29,19 @@ const CLIENT_ID = "853639117019283476";
 
 // resources\app\src\user
 console.log('\t*-----*');
-var settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
+var settings = JSON.parse(fs.readFileSync(path.join(__dirname, 'user', 'settings.json')));
 
-loginRPC();
 function loginRPC() {
-    /**
-     * Try to login
-     * If the ready event didnt fire and RPCClientIsReady is false
-     * repeat the process in 2 seconds
-     */
+    if (status_details.RPCClientIsReady) return;
 
     rpc.login({
         clientId: CLIENT_ID.toString()
+    }).catch(err => {
+        log.error(err);
+        mainWindow.webContents.send('notify', { title: 'Could not connect to your Discord app!', msg: 'Make sure your Discor app is running and restart WiiU RPC', timeout: 5 });
     });
-
-    if (status_details.RPCClientIsReady) return;
-    else setTimeout(() => {
-        loginRPC();
-    }, 2000);
 }
+loginRPC();
 
 var games = JSON.parse(fs.readFileSync(path.join(__dirname, 'games.json')));
 /* console.log(games); */
@@ -76,11 +70,11 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
     // Prevent user from opening dev tools
-    /*     mainWindow.webContents.on('devtools-opened', () => {
-            mainWindow.webContents.closeDevTools();
-        }); */
+    mainWindow.webContents.on('devtools-opened', () => {
+        mainWindow.webContents.closeDevTools();
+    });
 
-    globalShortcut.register('CommandOrControl+Shift+I', () => { return })
+    globalShortcut.register('CommandOrControl+Shift+I', () => { return });
 };
 
 // This method will be called when Electron has finished
@@ -112,7 +106,8 @@ ipcMain.on('update_game', (sender, gameId) => {
     }
     if (status_details.startedPlayingTimestamp == null) status_details.startedPlayingTimestamp = Date.now();
     try {
-        if (settings["reset-timer-when-playing-a-new-game"] == true) status_details.startedPlayingTimestamp = new Date();
+        log.info('Changing activity');
+        if (settings["reset-timer-when-playing-a-new-game"] == true) status_details.startedPlayingTimestamp = Date.now();
         rpc.setActivity({
             state: "Playing",
             details: games[gameId].title,
@@ -136,10 +131,10 @@ ipcMain.on('update_game', (sender, gameId) => {
 ipcMain.on('update_settings', (sender, optionKey) => {
     /**
      * At this point the settings file itself is already up to date
-     * Now we just update the variable for the settings checks (beginning on line 91).
+     * Now we just update the variable for the settings checks.
      */
 
-    settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
+    settings = JSON.parse(fs.readFileSync(path.join(__dirname, 'user', 'settings.json')));
     log.info('Settings Updated');
 });
 

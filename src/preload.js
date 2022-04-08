@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const makeHTML = require('./js/generateGameHtml');
 
 const customTitleBar = require('custom-electron-titlebar');
 
@@ -20,7 +21,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     var checkbox1 = document.getElementById('reset-timer-when-playing-a-new-game');
-    var settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
+    var settings = JSON.parse(fs.readFileSync(path.join(__dirname, 'user', 'settings.json')));
 
     checkbox1.checked = settings["reset-timer-when-playing-a-new-game"];
+
+    // load games
+    const games = JSON.parse(fs.readFileSync(path.join(__dirname, 'games.json')));
+    const gameSection = document.getElementById('container-games')
+    for (const game in games) {
+        if (Object.hasOwnProperty.call(games, game)) {
+            const _game = games[game];
+            gameSection.innerHTML += makeHTML(game, _game.title);
+        }
+    }
 });

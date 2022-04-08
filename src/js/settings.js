@@ -1,9 +1,9 @@
 const { ipcRenderer } = require('electron');
 const fs = require('fs');
 const path = require('path');
-const settingsFile = path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json');
+const settingsFile = path.join(__dirname, 'user', 'settings.json')
 
-var settings = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'resources', 'app', 'src', 'user', 'settings.json')));
+var settings = JSON.parse(fs.readFileSync(settingsFile));
 
 function MissingParameters() {
     this.message = "Please provide both parameters key and value";
