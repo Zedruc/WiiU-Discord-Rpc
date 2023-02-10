@@ -6,11 +6,15 @@ const axios = require('axios').default;
 const rpc = new RPC.Client({
   transport: 'ipc',
 });
+const timer = require('./util/timer');
+const GameTimer = new timer();
+
+var notFirst = false;
 
 // Setup file logging
 const log = require('electron-log');
 log.transports.file.level = 'silly';
-log.transports.file.file = path.join(process.cwd(), 'resources', 'app', 'logs', 'log.log');
+log.transports.file.file = path.join(process.cwd(), 'logs', 'log.log');
 
 // Log a message
 // log.info('Info log');
@@ -19,6 +23,7 @@ log.transports.file.file = path.join(process.cwd(), 'resources', 'app', 'logs', 
 var status_details = {
   RPCClientIsReady: false,
   startedPlayingTimestamp: null,
+  currentGame: null,
 };
 
 rpc.on('ready', () => {
@@ -30,7 +35,6 @@ rpc.on('ready', () => {
 const CLIENT_ID = '853639117019283476';
 
 // resources\app\src\user
-console.log('\t*-----*');
 var settings = JSON.parse(fs.readFileSync(path.join(__dirname, 'user', 'settings.json')));
 
 function loginRPC() {
@@ -71,9 +75,9 @@ var mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 900,
+    width: 1000,
     height: 600,
-    minWidth: 770,
+    minWidth: 1000,
     minHeight: 570,
     frame: false,
     webPreferences: {
@@ -86,6 +90,16 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+  mainWindow.on('close', () => {
+    console.log('Close button');
+  });
+
+  // shortcut to reset playtime (*supposed* to be used by dev only)
+  globalShortcut.register('CommandOrControl+Shift+T', () => {
+    log.warn('All playtimes have been reverted to 0');
+    GameTimer.resetAllTimes();
+  });
 
   // Prevent user from opening dev tools
   /* mainWindow.webContents.on('devtools-opened', () => {
@@ -107,7 +121,11 @@ app.on('ready', createWindow);
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info('Quitting App');
+    // save game times
+    log.info('Saving times...');
+    GameTimer.saveTime(status_details.currentGame);
+    GameTimer.saveAll();
+    log.info('Quitting app.');
     app.quit();
   }
 });
@@ -121,14 +139,32 @@ app.on('activate', () => {
 });
 
 ipcMain.on('update_game', (sender, gameId) => {
+  console.log(
+    'Old game: ' + status_details.currentGame + '\nCurrent Game (switching to): ' + gameId
+  );
   if (!status_details.RPCClientIsReady) {
     mainWindow.webContents.send('not_ready_yet');
   }
   if (status_details.startedPlayingTimestamp == null)
     status_details.startedPlayingTimestamp = Date.now();
   try {
-    if (settings['reset-timer-when-playing-a-new-game'] == true)
+    if (settings['reset-timer-when-playing-a-new-game'] == true) {
       status_details.startedPlayingTimestamp = Date.now();
+    }
+    if (settings['track-times'] == true && notFirst) {
+      // save time for the current game before switching to the new one
+      GameTimer.saveTime(status_details.currentGame);
+      mainWindow.webContents.send(
+        'playtime_change',
+        status_details.currentGame,
+        GameTimer.formatTime(status_details.currentGame)
+      );
+    }
+
+    // switch to new game
+    status_details.currentGame = gameId;
+    notFirst = true;
+
     rpc.setActivity({
       state: 'Playing',
       details: games[gameId].title,
