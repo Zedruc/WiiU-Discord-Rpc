@@ -5,17 +5,17 @@ const timer = require('./util/timer');
 const GameTimer = new timer();
 const makeHTML = require('./js/generateGameHtml');
 
-const customTitleBar = require('custom-electron-titlebar');
+/* const customTitleBar = require('custom-electron-titlebar'); */
 
 window.addEventListener('DOMContentLoaded', () => {
-  new customTitleBar.Titlebar({
+  /* new customTitleBar.Titlebar({
     backgroundColor: customTitleBar.Color.fromHex('#121111'),
     icon: './images/icons/icon.png',
     menu: false,
     closeable: true,
     minimizable: true,
     maximizable: true,
-  });
+  }); */
 
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector);

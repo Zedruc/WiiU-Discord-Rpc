@@ -79,7 +79,12 @@ const createWindow = () => {
     height: 600,
     minWidth: 1000,
     minHeight: 570,
-    frame: false,
+    title: 'WiiU RPC',
+    titleBarOverlay: {
+      color: '#121111',
+    },
+    /* frame: false, */
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
