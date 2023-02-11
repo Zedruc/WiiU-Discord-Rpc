@@ -107,13 +107,13 @@ const createWindow = () => {
   });
 
   // Prevent user from opening dev tools
-  /* mainWindow.webContents.on('devtools-opened', () => {
+  mainWindow.webContents.on('devtools-opened', () => {
     mainWindow.webContents.closeDevTools();
   });
 
   globalShortcut.register('CommandOrControl+Shift+I', () => {
     return;
-  }); */
+  });
 };
 
 // This method will be called when Electron has finished

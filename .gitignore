@@ -90,3 +90,6 @@ out/
 
 # Client ID
 .txt
+
+# Dist folder
+dist/
