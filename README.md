@@ -8,8 +8,7 @@ Download the [latest release](https://github.com/Zedruc/WiiU-Discord-Rpc/release
 Now start `wiiu-discord-rpc.exe`. Thats it!
 
 ## How to use the app
-Simply start the app and click the game you are currently playing. If it is not supported yet, submit it!
+Simply start the app and click the game you are currently playing. If it is not supported yet, submit it.
 
 ## How to help, even without coding!
-If you want a game added, or you would like to see an option added, just submit it!  
-You can either make an issue or go to the [website](https://zedruc.github.io/wiiu-discord-rpc/feature-requests) and request it there
+If you want a game added, or you would like to see an option added, simply open an issue.
